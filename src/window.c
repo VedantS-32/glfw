@@ -497,7 +497,7 @@ GLFWAPI void glfwDestroyWindow(GLFWwindow* handle)
     _glfw_free(window);
 }
 
-GLFWAPI int glfwWindowShouldClose(GLFWwindow* handle)
+GLFWAPI int glfwWindowshouldClose(GLFWwindow* handle)
 {
     _GLFWwindow* window = (_GLFWwindow*) handle;
     assert(window != NULL);
@@ -506,7 +506,7 @@ GLFWAPI int glfwWindowShouldClose(GLFWwindow* handle)
     return window->shouldClose;
 }
 
-GLFWAPI void glfwSetWindowShouldClose(GLFWwindow* handle, int value)
+GLFWAPI void glfwSetWindowshouldClose(GLFWwindow* handle, int value)
 {
     _GLFWwindow* window = (_GLFWwindow*) handle;
     assert(window != NULL);

@@ -3215,7 +3215,7 @@ GLFWAPI void glfwDestroyWindow(GLFWwindow* window);
  *
  *  @ingroup window
  */
-GLFWAPI int glfwWindowShouldClose(GLFWwindow* window);
+GLFWAPI int glfwWindowshouldClose(GLFWwindow* window);
 
 /*! @brief Sets the close flag of the specified window.
  *
@@ -3237,7 +3237,7 @@ GLFWAPI int glfwWindowShouldClose(GLFWwindow* window);
  *
  *  @ingroup window
  */
-GLFWAPI void glfwSetWindowShouldClose(GLFWwindow* window, int value);
+GLFWAPI void glfwSetWindowshouldClose(GLFWwindow* window, int value);
 
 /*! @brief Sets the title of the specified window.
  *
@@ -4173,7 +4173,7 @@ GLFWAPI GLFWwindowsizefun glfwSetWindowSizeCallback(GLFWwindow* window, GLFWwind
  *  the close widget in the title bar.
  *
  *  The close flag is set before this callback is called, but you can modify it
- *  at any time with @ref glfwSetWindowShouldClose.
+ *  at any time with @ref glfwSetWindowshouldClose.
  *
  *  The close callback is not triggered by @ref glfwDestroyWindow.
  *

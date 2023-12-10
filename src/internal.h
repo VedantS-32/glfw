@@ -575,7 +575,7 @@ struct _GLFWwindow
     } callbacks;
 
     // This is defined in platform.h
-    GLFW_PLATFORM_WINDOW_STATE
+    GLFW_PLATFORm_window_STATE
 };
 
 // Monitor structure
