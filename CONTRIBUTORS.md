@@ -66,6 +66,7 @@ video tutorials.
  - Nikita Fediuchin
  - Felipe Ferreira
  - Michael Fogleman
+ - forworldm
  - Jason Francis
  - Gerald Franz
  - Mário Freitas
@@ -102,6 +103,7 @@ video tutorials.
  - JannikGM
  - Erik S. V. Jansson
  - jjYBdx4IL
+ - Peter Johnson
  - Toni Jovanoski
  - Arseny Kapoulkine
  - Cem Karan
@@ -212,6 +214,7 @@ video tutorials.
  - Matt Sealey
  - Steve Sexton
  - Arkady Shapkin
+ - Mingjie Shen
  - Ali Sherief
  - Yoshiki Shibukawa
  - Dmitri Shuralyov
@@ -249,6 +252,7 @@ video tutorials.
  - Jari Vetoniemi
  - Ricardo Vieira
  - Nicholas Vitovitch
+ - Vladimír Vondruš
  - Simon Voordouw
  - Corentin Wallez
  - Torsten Walluhn

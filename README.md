@@ -183,6 +183,8 @@ information on what to include when reporting a bug.
  - Bugfix: `glfwMakeContextCurrent` would access TLS slot before initialization
  - Bugfix: `glfwSetGammaRamp` could emit `GLFW_INVALID_VALUE` before initialization
  - Bugfix: `glfwGetJoystickUserPointer` returned `NULL` during disconnection (#2092)
+ - Bugfix: `glfwGetKeyScancode` returned `0` on error when initialized instead of `-1`
+ - Bugfix: Failure to make a newly created context current could cause segfault (#2327)
  - [Win32] Added the `GLFW_WIN32_KEYBOARD_MENU` window hint for enabling access
            to the window menu
  - [Win32] Added a version info resource to the GLFW DLL
@@ -231,6 +233,7 @@ information on what to include when reporting a bug.
  - [Win32] Bugfix: Right shift emitted `GLFW_KEY_UNKNOWN` when using a CJK IME (#2050)
  - [Win32] Bugfix: `glfwWaitEventsTimeout` did not return for some sent messages (#2408)
  - [Win32] Bugfix: Fix pkg-config for dynamic library on Windows (#2386, #2420)
+ - [Win32] Bugfix: XInput could reportedly provide invalid DPad bit masks (#2291)
  - [Cocoa] Added support for `VK_EXT_metal_surface` (#1619)
  - [Cocoa] Added locating the Vulkan loader at runtime in an application bundle
  - [Cocoa] Moved main menu creation to GLFW initialization time (#1649)
@@ -271,6 +274,8 @@ information on what to include when reporting a bug.
    application (#2110)
  - [Cocoa] Bugfix: The Vulkan loader was not loaded from the `Frameworks` bundle
    subdirectory (#2113,#2120)
+ - [Cocoa] Bugfix: Compilation failed on OS X 10.8 due to unconditional use of 10.9+
+   symbols (#2161)
  - [X11] Bugfix: The CMake files did not check for the XInput headers (#1480)
  - [X11] Bugfix: Key names were not updated when the keyboard layout changed
    (#1462,#1528)
@@ -387,7 +392,6 @@ information on what to include when reporting a bug.
  - [Wayland] Bugfix: Connecting a mouse after `glfwInit` would segfault (#1450)
  - [Wayland] Bugfix: Joysticks connected after `glfwInit` were not detected (#2198)
  - [Wayland] Bugfix: Fallback decorations emitted `GLFW_CURSOR_UNAVAILABLE` errors
- - [Wayland] Bugfix: Showing an undecorated window would cause a protocol error
  - [POSIX] Removed use of deprecated function `gettimeofday`
  - [POSIX] Bugfix: `CLOCK_MONOTONIC` was not correctly tested for or enabled
  - [Linux] Bugfix: Joysticks without buttons were ignored (#2042,#2043)
