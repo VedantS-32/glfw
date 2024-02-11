@@ -140,6 +140,11 @@ GLFW itself, using the
 alongside subsurfaces.  If the running compositor does not support these
 protocols either, no decorations will be drawn around windows.
 
+GLFW uses the [xdg-activation
+protocol](https://wayland.app/protocols/xdg-activation-v1)
+to implement window focus and attention requests.  If the running compositor
+does not support this protocol, window focus and attention requests do nothing.
+
 
 @section compat_glx GLX extensions
 

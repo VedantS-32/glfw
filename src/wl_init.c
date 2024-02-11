@@ -46,6 +46,7 @@
 #include "viewporter-client-protocol.h"
 #include "relative-pointer-unstable-v1-client-protocol.h"
 #include "pointer-constraints-unstable-v1-client-protocol.h"
+#include "xdg-activation-v1-client-protocol.h"
 #include "idle-inhibit-unstable-v1-client-protocol.h"
 
 // NOTE: Versions of wayland-scanner prior to 1.17.91 named every global array of
@@ -75,6 +76,10 @@
 
 #define types _glfw_pointer_constraints_types
 #include "pointer-constraints-unstable-v1-client-protocol-code.h"
+#undef types
+
+#define types _glfw_xdg_activation_types
+#include "xdg-activation-v1-client-protocol-code.h"
 #undef types
 
 #define types _glfw_idle_inhibit_types
@@ -175,6 +180,13 @@ static void registryHandleGlobal(void* userData,
         _glfw.wl.idleInhibitManager =
             wl_registry_bind(registry, name,
                              &zwp_idle_inhibit_manager_v1_interface,
+                             1);
+    }
+    else if (strcmp(interface, "xdg_activation_v1") == 0)
+    {
+        _glfw.wl.activationManager =
+            wl_registry_bind(registry, name,
+                             &xdg_activation_v1_interface,
                              1);
     }
 }
@@ -405,86 +417,86 @@ GLFWbool _glfwConnectWayland(int platformID, _GLFWplatform* platform)
 {
     const _GLFWplatform wayland =
     {
-        GLFW_PLATFORM_WAYLAND,
-        _glfwInitWayland,
-        _glfwTerminateWayland,
-        _glfwGetCursorPosWayland,
-        _glfwSetCursorPosWayland,
-        _glfwSetCursorModeWayland,
-        _glfwSetRawMouseMotionWayland,
-        _glfwRawMouseMotionSupportedWayland,
-        _glfwCreateCursorWayland,
-        _glfwCreateStandardCursorWayland,
-        _glfwDestroyCursorWayland,
-        _glfwSetCursorWayland,
-        _glfwGetScancodeNameWayland,
-        _glfwGetKeyScancodeWayland,
-        _glfwSetClipboardStringWayland,
-        _glfwGetClipboardStringWayland,
+        .platformID = GLFW_PLATFORM_WAYLAND,
+        .init = _glfwInitWayland,
+        .terminate = _glfwTerminateWayland,
+        .getCursorPos = _glfwGetCursorPosWayland,
+        .setCursorPos = _glfwSetCursorPosWayland,
+        .setCursorMode = _glfwSetCursorModeWayland,
+        .setRawMouseMotion = _glfwSetRawMouseMotionWayland,
+        .rawMouseMotionSupported = _glfwRawMouseMotionSupportedWayland,
+        .createCursor = _glfwCreateCursorWayland,
+        .createStandardCursor = _glfwCreateStandardCursorWayland,
+        .destroyCursor = _glfwDestroyCursorWayland,
+        .setCursor = _glfwSetCursorWayland,
+        .getScancodeName = _glfwGetScancodeNameWayland,
+        .getKeyScancode = _glfwGetKeyScancodeWayland,
+        .setClipboardString = _glfwSetClipboardStringWayland,
+        .getClipboardString = _glfwGetClipboardStringWayland,
 #if defined(GLFW_BUILD_LINUX_JOYSTICK)
-        _glfwInitJoysticksLinux,
-        _glfwTerminateJoysticksLinux,
-        _glfwPollJoystickLinux,
-        _glfwGetMappingNameLinux,
-        _glfwUpdateGamepadGUIDLinux,
+        .initJoysticks = _glfwInitJoysticksLinux,
+        .terminateJoysticks = _glfwTerminateJoysticksLinux,
+        .pollJoystick = _glfwPollJoystickLinux,
+        .getMappingName = _glfwGetMappingNameLinux,
+        .updateGamepadGUID = _glfwUpdateGamepadGUIDLinux,
 #else
-        _glfwInitJoysticksNull,
-        _glfwTerminateJoysticksNull,
-        _glfwPollJoystickNull,
-        _glfwGetMappingNameNull,
-        _glfwUpdateGamepadGUIDNull,
+        .initJoysticks = _glfwInitJoysticksNull,
+        .terminateJoysticks = _glfwTerminateJoysticksNull,
+        .pollJoystick = _glfwPollJoystickNull,
+        .getMappingName = _glfwGetMappingNameNull,
+        .updateGamepadGUID = _glfwUpdateGamepadGUIDNull,
 #endif
-        _glfwFreeMonitorWayland,
-        _glfwGetMonitorPosWayland,
-        _glfwGetMonitorContentScaleWayland,
-        _glfwGetMonitorWorkareaWayland,
-        _glfwGetVideoModesWayland,
-        _glfwGetVideoModeWayland,
-        _glfwGetGammaRampWayland,
-        _glfwSetGammaRampWayland,
-        _glfwCreateWindowWayland,
-        _glfwDestroyWindowWayland,
-        _glfwSetWindowTitleWayland,
-        _glfwSetWindowIconWayland,
-        _glfwGetWindowPosWayland,
-        _glfwSetWindowPosWayland,
-        _glfwGetWindowSizeWayland,
-        _glfwSetWindowSizeWayland,
-        _glfwSetWindowSizeLimitsWayland,
-        _glfwSetWindowAspectRatioWayland,
-        _glfwGetFramebufferSizeWayland,
-        _glfwGetWindowFrameSizeWayland,
-        _glfwGetWindowContentScaleWayland,
-        _glfwIconifyWindowWayland,
-        _glfwRestoreWindowWayland,
-        _glfwMaximizeWindowWayland,
-        _glfwShowWindowWayland,
-        _glfwHideWindowWayland,
-        _glfwRequestWindowAttentionWayland,
-        _glfwFocusWindowWayland,
-        _glfwSetWindowMonitorWayland,
-        _glfwWindowFocusedWayland,
-        _glfwWindowIconifiedWayland,
-        _glfwWindowVisibleWayland,
-        _glfwWindowMaximizedWayland,
-        _glfwWindowHoveredWayland,
-        _glfwFramebufferTransparentWayland,
-        _glfwGetWindowOpacityWayland,
-        _glfwSetWindowResizableWayland,
-        _glfwSetWindowDecoratedWayland,
-        _glfwSetWindowFloatingWayland,
-        _glfwSetWindowOpacityWayland,
-        _glfwSetWindowMousePassthroughWayland,
-        _glfwPollEventsWayland,
-        _glfwWaitEventsWayland,
-        _glfwWaitEventsTimeoutWayland,
-        _glfwPostEmptyEventWayland,
-        _glfwGetEGLPlatformWayland,
-        _glfwGetEGLNativeDisplayWayland,
-        _glfwGetEGLNativeWindowWayland,
-        _glfwGetRequiredInstanceExtensionsWayland,
-        _glfwGetPhysicalDevicePresentationSupportWayland,
-        _glfwCreateWindowSurfaceWayland,
+        .freeMonitor = _glfwFreeMonitorWayland,
+        .getMonitorPos = _glfwGetMonitorPosWayland,
+        .getMonitorContentScale = _glfwGetMonitorContentScaleWayland,
+        .getMonitorWorkarea = _glfwGetMonitorWorkareaWayland,
+        .getVideoModes = _glfwGetVideoModesWayland,
+        .getVideoMode = _glfwGetVideoModeWayland,
+        .getGammaRamp = _glfwGetGammaRampWayland,
+        .setGammaRamp = _glfwSetGammaRampWayland,
+        .createWindow = _glfwCreateWindowWayland,
+        .destroyWindow = _glfwDestroyWindowWayland,
+        .setWindowTitle = _glfwSetWindowTitleWayland,
+        .setWindowIcon = _glfwSetWindowIconWayland,
+        .getWindowPos = _glfwGetWindowPosWayland,
+        .setWindowPos = _glfwSetWindowPosWayland,
+        .getWindowSize = _glfwGetWindowSizeWayland,
+        .setWindowSize = _glfwSetWindowSizeWayland,
+        .setWindowSizeLimits = _glfwSetWindowSizeLimitsWayland,
+        .setWindowAspectRatio = _glfwSetWindowAspectRatioWayland,
+        .getFramebufferSize = _glfwGetFramebufferSizeWayland,
+        .getWindowFrameSize = _glfwGetWindowFrameSizeWayland,
+        .getWindowContentScale = _glfwGetWindowContentScaleWayland,
+        .iconifyWindow = _glfwIconifyWindowWayland,
+        .restoreWindow = _glfwRestoreWindowWayland,
+        .maximizeWindow = _glfwMaximizeWindowWayland,
+        .showWindow = _glfwShowWindowWayland,
+        .hideWindow = _glfwHideWindowWayland,
+        .requestWindowAttention = _glfwRequestWindowAttentionWayland,
+        .focusWindow = _glfwFocusWindowWayland,
+        .setWindowMonitor = _glfwSetWindowMonitorWayland,
+        .windowFocused = _glfwWindowFocusedWayland,
+        .windowIconified = _glfwWindowIconifiedWayland,
+        .windowVisible = _glfwWindowVisibleWayland,
+        .windowMaximized = _glfwWindowMaximizedWayland,
+        .windowHovered = _glfwWindowHoveredWayland,
+        .framebufferTransparent = _glfwFramebufferTransparentWayland,
+        .getWindowOpacity = _glfwGetWindowOpacityWayland,
+        .setWindowResizable = _glfwSetWindowResizableWayland,
+        .setWindowDecorated = _glfwSetWindowDecoratedWayland,
+        .setWindowFloating = _glfwSetWindowFloatingWayland,
+        .setWindowOpacity = _glfwSetWindowOpacityWayland,
+        .setWindowMousePassthrough = _glfwSetWindowMousePassthroughWayland,
+        .pollEvents = _glfwPollEventsWayland,
+        .waitEvents = _glfwWaitEventsWayland,
+        .waitEventsTimeout = _glfwWaitEventsTimeoutWayland,
+        .postEmptyEvent = _glfwPostEmptyEventWayland,
+        .getEGLPlatform = _glfwGetEGLPlatformWayland,
+        .getEGLNativeDisplay = _glfwGetEGLNativeDisplayWayland,
+        .getEGLNativeWindow = _glfwGetEGLNativeWindowWayland,
+        .getRequiredInstanceExtensions = _glfwGetRequiredInstanceExtensionsWayland,
+        .getPhysicalDevicePresentationSupport = _glfwGetPhysicalDevicePresentationSupportWayland,
+        .createWindowSurface = _glfwCreateWindowSurfaceWayland
     };
 
     void* module = _glfwPlatformLoadModule("libwayland-client.so.0");
@@ -929,6 +941,8 @@ void _glfwTerminateWayland(void)
         zwp_pointer_constraints_v1_destroy(_glfw.wl.pointerConstraints);
     if (_glfw.wl.idleInhibitManager)
         zwp_idle_inhibit_manager_v1_destroy(_glfw.wl.idleInhibitManager);
+    if (_glfw.wl.activationManager)
+        xdg_activation_v1_destroy(_glfw.wl.activationManager);
     if (_glfw.wl.registry)
         wl_registry_destroy(_glfw.wl.registry);
     if (_glfw.wl.display)
