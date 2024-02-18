@@ -1,4 +1,4 @@
-project "GLFW"
+project "glfw"
 kind "StaticLib"
 language "C"
 
@@ -7,8 +7,8 @@ objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 files
 {
-    "include/GLFW/glfw3.h",
-    "include/GLFW/glfw3native.h",
+    "include/glfw/glfw3.h",
+    "include/glfw/glfw3native.h",
     "src/internal.h",
     "src/platform.h",
     "src/mappings.h",
