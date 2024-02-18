@@ -402,8 +402,8 @@ struct _GLFWwndconfig
     GLFWbool      focusOnShow;
     GLFWbool      mousePassthrough;
     GLFWbool      scaleToMonitor;
+    GLFWbool      scaleFramebuffer;
     struct {
-        GLFWbool  retina;
         char      frameName[256];
     } ns;
     struct {
@@ -412,6 +412,7 @@ struct _GLFWwndconfig
     } x11;
     struct {
         GLFWbool  keymenu;
+        GLFWbool  showDefault;
     } win32;
     struct {
         char      appId[256];
@@ -997,8 +998,6 @@ char** _glfwParseUriList(char* text, int* count);
 char* _glfw_strdup(const char* source);
 int _glfw_min(int a, int b);
 int _glfw_max(int a, int b);
-float _glfw_fminf(float a, float b);
-float _glfw_fmaxf(float a, float b);
 
 void* _glfw_calloc(size_t count, size_t size);
 void* _glfw_realloc(void* pointer, size_t size);

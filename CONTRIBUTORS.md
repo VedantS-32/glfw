@@ -33,6 +33,7 @@ video tutorials.
  - David Carlier
  - Arturo Castro
  - Chi-kwan Chan
+ - Victor Chernyakin
  - TheChocolateOre
  - Ali Chraghi
  - Joseph Chua
@@ -167,6 +168,8 @@ video tutorials.
  - Pascal Muetschard
  - James Murphy
  - Julian Møller
+ - Julius Häger
+ - Nat
  - NateIsStalling
  - ndogxj
  - F. Nedelec
@@ -249,6 +252,7 @@ video tutorials.
  - Paul Sultana
  - Nathan Sweet
  - TTK-Bandit
+ - Nuno Teixeira
  - Jared Tiala
  - Sergey Tikhomirov
  - Arthur Tombs

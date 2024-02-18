@@ -144,6 +144,7 @@ information on what to include when reporting a bug.
    content area (#58)
  - Added `GLFW_POSITION_X` and `GLFW_POSITION_Y` window hints for initial position
    (#1603,#1747)
+ - Added `GLFW_SCALE_FRAMEBUFFER` window hint for Wayland and macOS scaling (#2457)
  - Added `GLFW_ANY_POSITION` hint value for letting the window manager choose (#1603,#1747)
  - Added `GLFW_PLATFORM_UNAVAILABLE` error for platform detection failures (#1958)
  - Added `GLFW_FEATURE_UNAVAILABLE` error for platform limitations (#1692)
@@ -155,12 +156,15 @@ information on what to include when reporting a bug.
  - Added `GLFW_X11_XCB_VULKAN_SURFACE` init hint for selecting X11 Vulkan
    surface extension (#1793)
  - Added `GLFW_WIN32_KEYBOARD_MENU` window hint for enabling access to the window menu
+ - Added `GLFW_WIN32_SHOWDEFAULT` window hint for applying the parent process
+   show command (#2359)
  - Added `GLFW_NATIVE_INCLUDE_NONE` for disabling inclusion of native headers (#1348)
  - Added `GLFW_BUILD_WIN32` CMake option for enabling Win32 support (#1958)
  - Added `GLFW_BUILD_COCOA` CMake option for enabling Cocoa support (#1958)
  - Added `GLFW_BUILD_X11` CMake option for enabling X11 support (#1958)
  - Added `GLFW_LIBRARY_TYPE` CMake variable for overriding the library type
    (#279,#1307,#1497,#1574,#1928)
+ - Added support for `XDG_SESSION_TYPE` environment variable
  - Added `GLFW_PKG_CONFIG_REQUIRES_PRIVATE` and `GLFW_PKG_CONFIG_LIBS_PRIVATE` CMake
    variables exposing pkg-config dependencies (#1307)
  - Made joystick subsystem initialize at first use (#1284,#1646)
@@ -179,10 +183,17 @@ information on what to include when reporting a bug.
    would abort (#1649)
  - [Wayland] Added support for `glfwRequestWindowAttention` (#2287)
  - [Wayland] Added support for `glfwFocusWindow`
+ - [Wayland] Added support for `GLFW_RESIZABLE` (#2203)
+ - [Wayland] Added support for fractional scaling of window contents
  - [Wayland] Added dynamic loading of all Wayland libraries
  - [Wayland] Bugfix: `CLOCK_MONOTONIC` was not correctly enabled
+ - [Wayland] Bugfix: `GLFW_HOVERED` was true when the cursor was over any
+   fallback window decoration
+ - [Wayland] Bugfix: Fallback decorations allowed resizing to invalid size
+   (#2204)
  - [X11] Bugfix: Termination would segfault if the IM had been destroyed
  - [X11] Bugfix: Any IM started after initialization would not be detected
+ - [Linux] Bugfix: Joystick evdev fds remained open in forks (#2446)
  - [POSIX] Removed use of deprecated function `gettimeofday`
  - [POSIX] Bugfix: `CLOCK_MONOTONIC` was not correctly tested for or enabled
  - [WGL] Disabled the DWM swap interval hack for Windows 8 and later (#1072)
