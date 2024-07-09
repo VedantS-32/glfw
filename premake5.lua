@@ -51,6 +51,32 @@ filter "system:linux"
         "_GLFW_X11"
     }
 
+filter "system:macosx"
+    pic "On"
+
+    systemversion "latest"
+
+    files {
+        "src/egl_context.c",
+        "src/osmesa_context.c",
+        "src/nsgl_context.m",
+        "src/posix_time.c",
+        "src/posix_module.c",
+        "src/posix_poll.c",
+        "src/posix_thread.c",
+        "src/cocoa_init.m",
+        "src/cocoa_monitor.c",
+        "src/cocoa_platform.c",
+        "src/cocoa_time.c",
+        "src/cocoa_window.m",
+        "src/cocoa_monitor.m",
+        "src/cocoa_joystick.m"
+    }
+
+    defines{
+        "_GLFW_COCOA"
+    }
+
 filter "system:windows"
     systemversion "latest"
 
