@@ -36,11 +36,13 @@
 #include <windowsx.h>
 #include <shellapi.h>
 
+int g_borderThickness = 1;
+
 // Returns the window style for the specified window
 //
 static DWORD getWindowStyle(const _GLFWwindow* window)
 {
-    DWORD style = WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+    DWORD style = WS_POPUP | WS_VISIBLE | WS_THICKFRAME;
 
     if (window->monitor)
         style |= WS_POPUP;
@@ -58,6 +60,8 @@ static DWORD getWindowStyle(const _GLFWwindow* window)
         else
             style |= WS_POPUP;
     }
+
+    style = WS_POPUP | WS_VISIBLE;
 
     return style;
 }
@@ -1266,6 +1270,24 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
             DragFinish(drop);
             return 0;
         }
+
+        case WM_NCCALCSIZE:
+        {
+            if (wParam) {
+                // If wParam is TRUE, lParam points to an NCCALCSIZE_PARAMS structure
+                LPNCCALCSIZE_PARAMS lpncsp = (LPNCCALCSIZE_PARAMS)lParam;
+
+                // Preserve the default behavior but adjust the client area
+                // This effectively customizes the border thickness
+                lpncsp->rgrc[0].left += g_borderThickness;
+                lpncsp->rgrc[0].top += g_borderThickness;
+                lpncsp->rgrc[0].right -= g_borderThickness;
+                lpncsp->rgrc[0].bottom -= g_borderThickness;
+
+                return 0;
+            }
+        }
+        break;
     }
 
     return DefWindowProcW(hWnd, uMsg, wParam, lParam);
