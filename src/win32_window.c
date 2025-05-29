@@ -61,7 +61,7 @@ static DWORD getWindowStyle(const _GLFWwindow* window)
             style |= WS_POPUP;
     }
 
-    style = WS_POPUP | WS_VISIBLE;
+    style = WS_VISIBLE | WS_POPUP;
 
     return style;
 }
@@ -1281,11 +1281,50 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
                 // This effectively customizes the border thickness
                 lpncsp->rgrc[0].left += g_borderThickness;
                 lpncsp->rgrc[0].top += g_borderThickness;
-                lpncsp->rgrc[0].right -= g_borderThickness;
+                lpncsp->rgrc[0].right -=  g_borderThickness;
                 lpncsp->rgrc[0].bottom -= g_borderThickness;
-
                 return 0;
             }
+        }
+        break;
+        case WM_NCHITTEST:
+        {
+            POINT pt = { LOWORD(lParam), HIWORD(lParam) };
+            ScreenToClient(window->win32.handle, &pt);
+
+            RECT rcClient;
+            GetClientRect(window->win32.handle, &rcClient);
+
+            // Define edge detection area size
+            const int EDGE_SIZE = 2;
+
+            // Don't allow resizing when maximized
+            if (window->win32.maximized)
+                return HTCLIENT;
+
+            // Check if cursor is on an edge or corner
+            if (pt.y < EDGE_SIZE) {
+                if (pt.x < EDGE_SIZE)
+                    return HTTOPLEFT;
+                if (pt.x > rcClient.right - EDGE_SIZE)
+                    return HTTOPRIGHT;
+                return HTTOP;
+            }
+            else if (pt.y > rcClient.bottom - EDGE_SIZE) {
+                if (pt.x < EDGE_SIZE)
+                    return HTBOTTOMLEFT;
+                if (pt.x > rcClient.right - EDGE_SIZE)
+                    return HTBOTTOMRIGHT;
+                return HTBOTTOM;
+            }
+            else if (pt.x < EDGE_SIZE)
+                return HTLEFT;
+            else if (pt.x > rcClient.right - EDGE_SIZE)
+                return HTRIGHT;
+
+            //// If in the custom title bar area but not on a button
+            //if (pt.y < 35 && pt.x < rcClient.right - 95)
+            //    return HTCAPTION;
         }
         break;
     }
